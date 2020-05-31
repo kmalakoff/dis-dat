@@ -1,0 +1,52 @@
+{
+  "name": "dis-dat",
+  "version": "0.1.0",
+  "description": "Run commands in parallel (dad / dis-and-dat) or sequentially (dtd / dis-then-dat)",
+  "keywords": [
+    "each",
+    "package",
+    "npm",
+    "install",
+    "test"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kmalakoff/dis-dat.git"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "bin": {
+    "dtd": "./bin/dis-then-dat",
+    "dis-then-dat": "./bin/dis-then-dat",
+    "dad": "./bin/dis-and-dat",
+    "dis-and-dat": "./bin/dis-and-dat"
+  },
+  "scripts": {
+    "format": "eslint . --fix",
+    "lint": "eslint .",
+    "test": "mocha-compat test/spec/**/*.test.js  --no-timeouts"
+  },
+  "dependencies": {
+    "cross-spawn-cb": "^0.2.4",
+    "getopts-compat": "^2.2.5",
+    "object-assign": "^4.1.1",
+    "queue-cb": "^1.1.4",
+    "string-argv": "^0.2.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "is-version": "^0.2.0",
+    "mocha-compat": "^3.5.5",
+    "prettier": "^2.0.5"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
