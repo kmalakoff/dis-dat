@@ -28,13 +28,11 @@
   "license": "MIT",
   "main": "index.js",
   "bin": {
-    "dtd": "./bin/dis-then-dat",
-    "dis-then-dat": "./bin/dis-then-dat",
-    "dad": "./bin/dis-and-dat",
-    "dis-and-dat": "./bin/dis-and-dat"
+    "dtd": "./bin/dis-then-dat.js",
+    "dad": "./bin/dis-and-dat.js"
   },
   "scripts": {
-    "format": "eslint . --fix",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "test": "mocha-compat test/spec/**/*.test.js  --no-timeouts"
   },

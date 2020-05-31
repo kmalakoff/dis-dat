@@ -9,7 +9,7 @@ var EOL = process.platform === 'win32' ? '\r\n' : '\n';
 describe('cli', function () {
   describe('happy path', function () {
     it('basic command - sequential', function (done) {
-      spawn(path.join(BIN, 'dis-then-dat'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
         assert.equal(res.code, 0);
         assert.ok(isVersion(res.stdout.split(EOL).slice(-3, -2)[0]));
@@ -19,7 +19,7 @@ describe('cli', function () {
     });
 
     it('basic command - parallel', function (done) {
-      spawn(path.join(BIN, 'dis-and-dat'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
         assert.equal(res.code, 0);
         var versions = res.stdout.split(EOL).slice(-3, -1);
@@ -32,7 +32,7 @@ describe('cli', function () {
 
   describe('unhappy path', function () {
     it('missing command - sequential', function (done) {
-      spawn(path.join(BIN, 'dis-then-dat'), ['--silent'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
         assert.ok(res.code !== 0);
         done();
@@ -40,7 +40,7 @@ describe('cli', function () {
     });
 
     it('missing command - parallel', function (done) {
-      spawn(path.join(BIN, 'dis-and-dat'), ['--silent'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
         assert.ok(res.code !== 0);
         done();
