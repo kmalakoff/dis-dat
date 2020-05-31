@@ -11,7 +11,6 @@ describe('cli', function () {
     it('basic command - sequential', function (done) {
       spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
-        assert.equal(res.code, 0);
         var lines = cr(res.stdout).split('\n');
         assert.ok(isVersion(lines.slice(-3, -2)[0]));
         assert.ok(isVersion(lines.slice(-2, -1)[0], 'v'));
@@ -22,7 +21,6 @@ describe('cli', function () {
     it('basic command - parallel', function (done) {
       spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
-        assert.equal(res.code, 0);
         var lines = cr(res.stdout).split('\n');
         var versions = lines.slice(-3, -1);
         assert.ok(isVersion(versions[0]) || isVersion(versions[0], 'v'));
@@ -36,7 +34,6 @@ describe('cli', function () {
     it('missing command - sequential', function (done) {
       spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
-        assert.ok(res.code !== 0);
         done();
       });
     });
@@ -44,7 +41,6 @@ describe('cli', function () {
     it('missing command - parallel', function (done) {
       spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
-        assert.ok(res.code !== 0);
         done();
       });
     });
