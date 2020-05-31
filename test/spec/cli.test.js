@@ -33,14 +33,14 @@ describe('cli', function () {
   describe('unhappy path', function () {
     it('missing command - sequential', function (done) {
       spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
-        assert.ok(!err);
+        assert.ok(!!err);
         done();
       });
     });
 
     it('missing command - parallel', function (done) {
       spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
-        assert.ok(!err);
+        assert.ok(!!err);
         done();
       });
     });
