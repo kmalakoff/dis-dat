@@ -2,9 +2,9 @@ var assert = require('assert');
 var path = require('path');
 var spawn = require('cross-spawn-cb');
 var isVersion = require('is-version');
+var cr = require('cr');
 
 var BIN = path.join(__dirname, '..', '..', 'bin');
-var EOL = process.platform === 'win32' ? '\r\n' : '\n';
 
 describe('cli', function () {
   describe('happy path', function () {
@@ -12,8 +12,9 @@ describe('cli', function () {
       spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
         assert.equal(res.code, 0);
-        assert.ok(isVersion(res.stdout.split(EOL).slice(-3, -2)[0]));
-        assert.ok(isVersion(res.stdout.split(EOL).slice(-2, -1)[0], 'v'));
+        var lines = cr(res.stdout).split('\n');
+        assert.ok(isVersion(lines.slice(-3, -2)[0]));
+        assert.ok(isVersion(lines.slice(-2, -1)[0], 'v'));
         done();
       });
     });
@@ -22,7 +23,8 @@ describe('cli', function () {
       spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
         assert.ok(!err);
         assert.equal(res.code, 0);
-        var versions = res.stdout.split(EOL).slice(-3, -1);
+        var lines = cr(res.stdout).split('\n');
+        var versions = lines.slice(-3, -1);
         assert.ok(isVersion(versions[0]) || isVersion(versions[0], 'v'));
         assert.ok(isVersion(versions[1]) || isVersion(versions[1], 'v'));
         done();
