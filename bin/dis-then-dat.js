@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 var getopts = require('getopts-compat');
+var exit = require('exit');
+var disDat = require('..');
 
 (function () {
   var options = getopts(process.argv.slice(2), {
@@ -13,9 +15,8 @@ var getopts = require('getopts-compat');
   var args = options._;
   if (!args.length) {
     console.log('Missing command. Example usage: dis-then-dat [command]');
-    return process.exit(-1);
+    return exit(-1);
   }
-  var disDat = require('..');
 
   if (!options.silent)
     options.header = function (command) {
@@ -27,7 +28,7 @@ var getopts = require('getopts-compat');
   disDat(args, options, function (err, results) {
     if (err) {
       console.log(err.message);
-      return process.exit(err.code || -1);
+      return exit(err.code || -1);
     }
     var errors = results.filter(function (result) {
       return !!result.error;
@@ -45,6 +46,6 @@ var getopts = require('getopts-compat');
       console.log('======================');
     }
 
-    process.exit(errors.length ? -1 : 0);
+    exit(errors.length ? -1 : 0);
   });
 })();
