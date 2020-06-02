@@ -35,7 +35,7 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "test": "mocha-compat test/spec/**/*.test.js  --no-timeouts",
-    "prepublish": "./bin/dis-then-dat.js \"npm run lint\" \"depcheck --ignores='depcheck'\""
+    "prepublishOnly": "./bin/dis-then-dat.js \"npm run lint\" \"depcheck --ignores='depcheck'\""
   },
   "dependencies": {
     "cross-spawn-cb": "^0.3.1",
