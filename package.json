@@ -38,7 +38,7 @@
     "test": "mocha-compat test/spec/**/*.test.js  --no-timeouts"
   },
   "dependencies": {
-    "cross-spawn-cb": "^0.3.1",
+    "cross-spawn-cb": "^0.4.1",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.5",
     "object-assign": "^4.1.1",
@@ -57,7 +57,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "is-version": "^0.2.0",
     "mocha-compat": "^3.5.5",
-    "prettier": "^2.3.2"
+    "prettier": "^2.7.1"
   },
   "engines": {
     "node": ">=0.8"
