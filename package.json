@@ -38,15 +38,15 @@
     "test": "mocha-compat test/spec/**/*.test.js  --no-timeouts"
   },
   "dependencies": {
-    "cross-spawn-cb": "^0.4.1",
+    "cross-spawn-cb": "^0.5.2",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.5",
-    "object-assign": "^4.1.1",
+    "just-extend": "^6.0.1",
     "queue-cb": "^1.1.6",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@typescript-eslint/parser": "^5.30.0",
     "cr": "^0.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
