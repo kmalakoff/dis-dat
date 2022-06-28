@@ -1,6 +1,6 @@
 {
   "name": "dis-dat",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Run commands in parallel (dad / dis-and-dat) or sequentially (dtd / dis-then-dat)",
   "keywords": [
     "this",
@@ -38,7 +38,7 @@
     "test": "mocha-compat test/spec/**/*.test.js  --no-timeouts"
   },
   "dependencies": {
-    "cross-spawn-cb": "^0.5.2",
+    "cross-spawn-cb": "^0.5.5",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.5",
     "just-extend": "^6.0.1",
