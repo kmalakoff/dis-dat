@@ -7,7 +7,7 @@ var disDat = require('../..');
 describe('library', function () {
   describe('happy path', function () {
     it('basic command', function (done) {
-      disDat(['npm --version', 'node --version'], { concurrency: 1, stdout: 'string' }, function (err, results) {
+      disDat(['npm --version', 'node --version'], { concurrency: 1, encoding: 'utf8' }, function (err, results) {
         assert.ok(!err);
         assert.ok(isVersion(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0]));
         assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
@@ -17,7 +17,7 @@ describe('library', function () {
     it('basic command (promises)', function (done) {
       if (typeof Promise === 'undefined') return;
 
-      disDat(['npm --version', 'node --version'], { concurrency: Infinity, stdout: 'string' })
+      disDat(['npm --version', 'node --version'], { concurrency: Infinity, encoding: 'utf8' })
         .then(function (results) {
           assert.ok(isVersion(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0]));
           assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));

@@ -9,7 +9,7 @@ var BIN = path.join(__dirname, '..', '..', 'bin');
 describe('cli', function () {
   describe('happy path', function () {
     it('basic command - sequential', function (done) {
-      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent', 'npm --version', 'node --version'], { encoding: 'utf8' }, function (err, res) {
         assert.ok(!err);
         var lines = cr(res.stdout).split('\n');
         assert.ok(isVersion(lines.slice(-3, -2)[0]));
@@ -19,7 +19,7 @@ describe('cli', function () {
     });
 
     it('basic command - parallel', function (done) {
-      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent', 'npm --version', 'node --version'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent', 'npm --version', 'node --version'], { encoding: 'utf8' }, function (err, res) {
         assert.ok(!err);
         var lines = cr(res.stdout).split('\n');
         var versions = lines.slice(-3, -1);
@@ -32,14 +32,14 @@ describe('cli', function () {
 
   describe('unhappy path', function () {
     it('missing command - sequential', function (done) {
-      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { encoding: 'utf8' }, function (err, res) {
         assert.ok(!!err);
         done();
       });
     });
 
     it('missing command - parallel', function (done) {
-      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { stdout: 'string' }, function (err, res) {
+      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { encoding: 'utf8' }, function (err, res) {
         assert.ok(!!err);
         done();
       });
