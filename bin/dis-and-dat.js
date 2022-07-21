@@ -25,6 +25,7 @@ var disDat = require('..');
       console.log('----------------------');
     };
 
+  options.stdio = 'inherit'
   disDat(args, options, function (err, results) {
     if (err) {
       console.log(err.message);
