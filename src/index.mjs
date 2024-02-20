@@ -1,7 +1,7 @@
-require('./polyfills');
-var run = require('./run');
+import './polyfills.cjs';
+import run from './run';
 
-module.exports = function disDat(commands, options, callback) {
+export default function disDat(commands, options, callback) {
   if (typeof options === 'function') {
     callback = options;
     options = {};
@@ -9,9 +9,9 @@ module.exports = function disDat(commands, options, callback) {
   options = options || {};
 
   if (typeof callback === 'function') return run(commands, options, callback);
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     run(commands, options, function runCallback(err, result) {
       err ? reject(err) : resolve(result);
     });
   });
-};
+}
