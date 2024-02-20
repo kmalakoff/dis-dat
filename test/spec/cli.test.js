@@ -1,28 +1,32 @@
-var assert = require('assert');
-var path = require('path');
-var spawn = require('cross-spawn-cb');
-var isVersion = require('is-version');
-var cr = require('cr');
+// remove NODE_OPTIONS from ts-dev-stack
+// biome-ignore lint/performance/noDelete: <explanation>
+delete process.env.NODE_OPTIONS;
 
-var BIN = path.join(__dirname, '..', '..', 'bin');
+const assert = require('assert');
+const path = require('path');
+const spawn = require('cross-spawn-cb');
+const isVersion = require('is-version');
+const cr = require('cr');
 
-describe('cli', function () {
-  describe('happy path', function () {
-    it('basic command - sequential', function (done) {
-      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent', 'echo "hello"', 'node --version'], { encoding: 'utf8' }, function (err, res) {
+const BIN = path.join(__dirname, '..', '..', 'bin');
+
+describe('cli', () => {
+  describe('happy path', () => {
+    it('basic command - sequential', (done) => {
+      spawn(path.join(BIN, 'dtd.js'), ['--silent', 'echo "hello"', 'node --version'], { encoding: 'utf8' }, (err, res) => {
         assert.ok(!err);
-        var lines = cr(res.stdout).split('\n');
+        const lines = cr(res.stdout).split('\n');
         assert.equal(lines.slice(-3, -2)[0], 'hello');
         assert.ok(isVersion(lines.slice(-2, -1)[0], 'v'));
         done();
       });
     });
 
-    it('basic command - parallel', function (done) {
-      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent', 'echo "hello"', 'node --version'], { encoding: 'utf8' }, function (err, res) {
+    it('basic command - parallel', (done) => {
+      spawn(path.join(BIN, 'dad.js'), ['--silent', 'echo "hello"', 'node --version'], { encoding: 'utf8' }, (err, res) => {
         assert.ok(!err);
-        var lines = cr(res.stdout).split('\n');
-        var versions = lines.slice(-3, -1);
+        const lines = cr(res.stdout).split('\n');
+        const versions = lines.slice(-3, -1);
         assert.ok(versions[0] === 'hello' || isVersion(versions[0], 'v'));
         assert.ok(isVersion(versions[1]) || isVersion(versions[1], 'v'));
         done();
@@ -30,16 +34,16 @@ describe('cli', function () {
     });
   });
 
-  describe('unhappy path', function () {
-    it('missing command - sequential', function (done) {
-      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { encoding: 'utf8' }, function (err, res) {
+  describe('unhappy path', () => {
+    it('missing command - sequential', (done) => {
+      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { encoding: 'utf8' }, (err, _res) => {
         assert.ok(!!err);
         done();
       });
     });
 
-    it('missing command - parallel', function (done) {
-      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { encoding: 'utf8' }, function (err, res) {
+    it('missing command - parallel', (done) => {
+      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { encoding: 'utf8' }, (err, _res) => {
         assert.ok(!!err);
         done();
       });

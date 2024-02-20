@@ -1,1 +1,1 @@
-ignores: ["depcheck"]
+ignores: ["dis-dat", "depcheck", "ts-dev-stack", "@types/*"]
