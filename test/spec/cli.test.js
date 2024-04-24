@@ -28,7 +28,7 @@ describe('cli', () => {
         const lines = cr(res.stdout).split('\n');
         const versions = lines.slice(-3, -1);
         assert.ok(versions[0] === 'hello' || isVersion(versions[0], 'v'));
-        assert.ok(isVersion(versions[1]) || isVersion(versions[1], 'v'));
+        assert.ok(versions[1] === 'hello' || isVersion(versions[1], 'v'));
         done();
       });
     });
@@ -36,14 +36,14 @@ describe('cli', () => {
 
   describe('unhappy path', () => {
     it('missing command - sequential', (done) => {
-      spawn(path.join(BIN, 'dis-then-dat.js'), ['--silent'], { encoding: 'utf8' }, (err, _res) => {
+      spawn(path.join(BIN, 'dtd.js'), ['--silent'], { encoding: 'utf8' }, (err, _res) => {
         assert.ok(!!err);
         done();
       });
     });
 
     it('missing command - parallel', (done) => {
-      spawn(path.join(BIN, 'dis-and-dat.js'), ['--silent'], { encoding: 'utf8' }, (err, _res) => {
+      spawn(path.join(BIN, 'dad.js'), ['--silent'], { encoding: 'utf8' }, (err, _res) => {
         assert.ok(!!err);
         done();
       });
