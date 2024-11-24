@@ -16,12 +16,12 @@ function _interop_require_default(obj) {
     };
 }
 function disDat(commands, options, callback) {
-    if (typeof options === "function") {
+    if (typeof options === 'function') {
         callback = options;
         options = {};
     }
     options = options || {};
-    if (typeof callback === "function") return (0, _run.default)(commands, options, callback);
+    if (typeof callback === 'function') return (0, _run.default)(commands, options, callback);
     return new Promise(function(resolve, reject) {
         (0, _run.default)(commands, options, function runCallback(err, result) {
             err ? reject(err) : resolve(result);

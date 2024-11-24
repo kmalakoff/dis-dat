@@ -27,9 +27,9 @@ function _object_spread(target) {
     }
     return target;
 }
-var Queue = require("queue-cb");
-var parse = require("string-argv").parseArgsStringToArgv;
-var spawn = require("cross-spawn-cb");
+var Queue = require('queue-cb');
+var parse = require('string-argv').parseArgsStringToArgv;
+var spawn = require('cross-spawn-cb');
 module.exports = function run(commands, options, callback) {
     var spawnOptions = _object_spread({
         cwd: process.cwd()

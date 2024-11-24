@@ -19,14 +19,14 @@ function _interop_require_default(obj) {
 var _default = function(argv, name) {
     var options = (0, _getoptscompat.default)(argv, {
         alias: {
-            silent: "s",
-            concurrency: "c"
+            silent: 's',
+            concurrency: 'c'
         },
         boolean: [
-            "silent"
+            'silent'
         ],
         default: {
-            concurrency: name === "dtd" ? 1 : Infinity
+            concurrency: name === 'dtd' ? 1 : Infinity
         },
         stopEarly: true
     });
@@ -36,11 +36,11 @@ var _default = function(argv, name) {
         return (0, _exit.default)(-1);
     }
     if (!options.silent) options.header = function(command) {
-        console.log("\n----------------------");
+        console.log('\n----------------------');
         console.log(command);
-        console.log("----------------------");
+        console.log('----------------------');
     };
-    options.stdio = "inherit";
+    options.stdio = 'inherit';
     (0, _index.default)(args, options, function(err, results) {
         if (err) {
             console.log(err.message);
@@ -50,7 +50,7 @@ var _default = function(argv, name) {
             return !!result.error;
         });
         if (!options.silent) {
-            console.log("\n======================");
+            console.log('\n======================');
             if (errors.length) {
                 console.log("Errors (".concat(errors.length, ")"));
                 for(var index = 0; index < errors.length; index++){
@@ -58,7 +58,7 @@ var _default = function(argv, name) {
                     console.log("".concat(result.path, " Error: ").concat(result.error.message));
                 }
             } else console.log("Success (".concat(results.length, ")"));
-            console.log("======================");
+            console.log('======================');
         }
         (0, _exit.default)(errors.length ? -1 : 0);
     });
