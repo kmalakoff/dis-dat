@@ -16,16 +16,16 @@ function _interop_require_default(obj) {
     };
 }
 function disDat(commands, options, callback) {
-    if (typeof options === "function") {
+    if (typeof options === 'function') {
         callback = options;
         options = {};
     }
     options = options || {};
-    if (typeof callback === "function") return (0, _run.default)(commands, options, callback);
+    if (typeof callback === 'function') return (0, _run.default)(commands, options, callback);
     return new Promise(function(resolve, reject) {
         (0, _run.default)(commands, options, function runCallback(err, result) {
             err ? reject(err) : resolve(result);
         });
     });
 }
-/* CJS INTEROP */ if (exports.__esModule && exports.default) { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) exports.default[key] = exports[key]; module.exports = exports.default; }
+/* CJS INTEROP */ if (exports.__esModule && exports.default) { try { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) { exports.default[key] = exports[key]; } } catch (_) {}; module.exports = exports.default; }

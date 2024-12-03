@@ -9,10 +9,32 @@ const cr = require('cr');
 const disDat = require('dis-dat');
 
 describe('library', () => {
-  describe('happy path', () => {
+  describe('sequential', () => {
     it('basic command', (done) => {
       disDat(['echo "hello"', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err, results) => {
-        assert.ok(!err);
+        assert.ok(!err, err ? err.message : '');
+        assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
+        assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
+        done();
+      });
+    });
+    it('basic command (promises)', (done) => {
+      disDat(['echo "hello"', 'node --version'], { concurrency: 1, encoding: 'utf8' })
+        .then((results) => {
+          assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
+          assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
+          done();
+        })
+        .catch((err) => {
+          assert.ok(!err, err ? err.message : '');
+        });
+    });
+  });
+
+  describe('parallel', () => {
+    it('basic command', (done) => {
+      disDat(['echo "hello"', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
+        assert.ok(!err, err ? err.message : '');
         assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
         assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
         done();
@@ -26,7 +48,7 @@ describe('library', () => {
           done();
         })
         .catch((err) => {
-          assert.ok(!err);
+          assert.ok(!err, err ? err.message : '');
         });
     });
   });
