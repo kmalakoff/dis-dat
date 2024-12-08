@@ -27,9 +27,9 @@ function _object_spread(target) {
     }
     return target;
 }
-var Queue = require("queue-cb");
-var parse = require("string-argv").parseArgsStringToArgv;
-var spawn = require("cross-spawn-cb");
+var Queue = require('queue-cb');
+var parse = require('string-argv').parseArgsStringToArgv;
+var spawn = require('cross-spawn-cb');
 module.exports = function run(commands, options, callback) {
     var spawnOptions = _object_spread({
         cwd: process.cwd()
@@ -62,4 +62,4 @@ module.exports = function run(commands, options, callback) {
         callback(null, results);
     });
 };
-/* CJS INTEROP */ if (exports.__esModule && exports.default) { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) exports.default[key] = exports[key]; module.exports = exports.default; }
+/* CJS INTEROP */ if (exports.__esModule && exports.default) { try { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) { exports.default[key] = exports[key]; } } catch (_) {}; module.exports = exports.default; }
