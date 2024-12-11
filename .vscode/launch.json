@@ -26,7 +26,7 @@
       "type": "node",
       "request": "launch",
       "name": "cli (dad)",
-      "program": "${workspaceFolder}/bin/dis-and-dat.js",
+      "program": "${workspaceFolder}/bin/dad.js",
       "args": ["npm --version", "node --version"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
@@ -35,7 +35,7 @@
       "type": "node",
       "request": "launch",
       "name": "cli (dtd)",
-      "program": "${workspaceFolder}/bin/dis-then-dat.js",
+      "program": "${workspaceFolder}/bin/dtd.js",
       "args": ["npm --version", "node --version"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
