@@ -1,4 +1,3 @@
-import './polyfills.cjs';
 import run from './run';
 
 export default function disDat(commands, options, callback) {
