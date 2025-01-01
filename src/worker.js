@@ -2,7 +2,6 @@ const Queue = require('queue-cb');
 const parse = require('string-argv').parseArgsStringToArgv;
 const spawn = require('cross-spawn-cb');
 
-// const bracketsRegEx = /\{([\s\S]*)\}/
 const bracketsRegEx = /\{([\s\S]*)\}/;
 
 module.exports = function run(commands, options, callback) {
@@ -12,7 +11,7 @@ module.exports = function run(commands, options, callback) {
 
   for (let index = 0; index < commands.length; index++) {
     ((index) => {
-      queue.defer((callback) => {
+      queue.defer((cb) => {
         const command = commands[index];
         const match = commands[index].match(bracketsRegEx);
         const argv = match ? parse(match[1]) : parse(command);
@@ -26,8 +25,8 @@ module.exports = function run(commands, options, callback) {
           }
 
           results.push({ index, command, error: err, result });
-          if (err && options.concurrency === 1) return callback(err); // break early
-          callback();
+          if (err && options.concurrency === 1) return cb(err); // break early
+          cb();
         });
       });
     })(index);
