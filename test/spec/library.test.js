@@ -1,6 +1,3 @@
-// remove NODE_OPTIONS from ts-dev-stack
-delete process.env.NODE_OPTIONS;
-
 const assert = require('assert');
 const isVersion = require('is-version');
 const cr = require('cr');
@@ -34,6 +31,15 @@ describe('library', () => {
       assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
       assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
     });
+    it('handles errors - stops in dtd', (done) => {
+      disDat(['echo "hello"', 'this is an error', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err, results) => {
+        assert.ok(!err, err ? err.message : '');
+        assert.ok(results.length === 2);
+        assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
+        assert.ok(results[1].error);
+        done();
+      });
+    });
   });
 
   describe('parallel', () => {
@@ -49,6 +55,16 @@ describe('library', () => {
       const results = await disDat(['echo "hello"', 'node --version'], { concurrency: Infinity, encoding: 'utf8' });
       assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
       assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
+    });
+    it('handles errors - continues in dad', (done) => {
+      disDat(['echo "hello"', 'this is an error', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
+        assert.ok(!err, err ? err.message : '');
+        assert.ok(results.length === 3);
+        assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
+        assert.ok(results[1].error);
+        assert.ok(isVersion(cr(results[2].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
+        done();
+      });
     });
   });
 });

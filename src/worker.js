@@ -13,16 +13,16 @@ module.exports = function run(commands, options, callback) {
         const command = commands[index];
         const argv = parse(command);
         !options.header || options.header(command);
-        spawn(argv[0], argv.slice(1), spawnOptions, (err, res) => {
-          results.push({ index: index, command: command, error: err, result: res });
+        spawn(argv[0], argv.slice(1), spawnOptions, (err, result) => {
+          results.push({ index, command, error: err, result });
+          if (err && options.concurrency === 1) return callback(err); // break early
           callback();
         });
       });
     })(index);
   }
 
-  queue.await((err) => {
-    if (err) return callback(err);
+  queue.await(() => {
     results = results.sort((a, b) => a.index - b.index);
     callback(null, results);
   });

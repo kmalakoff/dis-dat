@@ -37,7 +37,7 @@ export default (argv, name) => {
         console.log(`Errors (${errors.length})`);
         for (let index = 0; index < errors.length; index++) {
           const result = errors[index];
-          console.log(`${result.path} Error: ${result.error.message}`);
+          console.log(`${result.command} Error: ${result.error.message}`);
         }
       } else console.log(`Success (${results.length})`);
       console.log('======================');
