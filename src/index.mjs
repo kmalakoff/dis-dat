@@ -1,4 +1,4 @@
-import run from './run';
+import worker from './worker';
 
 export default function disDat(commands, options, callback) {
   if (typeof options === 'function') {
@@ -7,10 +7,10 @@ export default function disDat(commands, options, callback) {
   }
   options = options || {};
 
-  if (typeof callback === 'function') return run(commands, options, callback);
-  return new Promise((resolve, reject) => {
-    run(commands, options, function runCallback(err, result) {
+  if (typeof callback === 'function') return worker(commands, options, callback);
+  return new Promise((resolve, reject) =>
+    worker(commands, options, (err, result) => {
       err ? reject(err) : resolve(result);
-    });
-  });
+    })
+  );
 }
