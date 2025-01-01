@@ -8,9 +8,5 @@ export default function disDat(commands, options, callback) {
   options = options || {};
 
   if (typeof callback === 'function') return worker(commands, options, callback);
-  return new Promise((resolve, reject) =>
-    worker(commands, options, (err, result) => {
-      err ? reject(err) : resolve(result);
-    })
-  );
+  return new Promise((resolve, reject) => worker(commands, options, (err, result) => (err ? reject(err) : resolve(result))));
 }
