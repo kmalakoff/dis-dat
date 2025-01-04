@@ -23,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:kmalakoff/dis-dat.git"
+    "url": "git+ssh://git@github.com/kmalakoff/dis-dat.git"
   },
   "license": "MIT",
   "main": "dist/cjs/index.cjs",
@@ -46,10 +46,10 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "cross-spawn-cb": "^2.0.6",
+    "cross-spawn-cb": "^2.0.9",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.5",
-    "queue-cb": "^1.4.7",
+    "queue-cb": "^1.4.8",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
