@@ -46,10 +46,10 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "cross-spawn-cb": "^2.0.4",
+    "cross-spawn-cb": "^2.0.6",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.5",
-    "queue-cb": "^1.4.4",
+    "queue-cb": "^1.4.7",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
