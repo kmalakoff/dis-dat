@@ -4,6 +4,15 @@ const spawn = require('cross-spawn-cb');
 
 const bracketsRegEx = /\{([\s\S]*)\}/;
 
+// https://github.com/yarnpkg/berry/blob/2cf0a8fe3e4d4bd7d4d344245d24a85a45d4c5c9/packages/yarnpkg-pnp/sources/loader/applyPatch.ts#L414-L435
+const originalEmit = process.emit;
+// @ts-expect-error - TS complains about the return type of originalEmit.apply
+process.emit = (name, data, ..._args) => {
+  if (name === 'warning' && typeof data === 'object' && data.name === 'ExperimentalWarning' && (data.message.includes('--experimental-loader') || data.message.includes('Custom ESM Loaders is an experimental feature'))) return false;
+
+  return originalEmit.call(process, name, data, ..._args);
+};
+
 module.exports = function run(commands, options, callback) {
   const spawnOptions = { cwd: process.cwd(), ...options };
   let results = [];
