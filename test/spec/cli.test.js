@@ -5,8 +5,8 @@ const isVersion = require('is-version');
 const cr = require('cr');
 
 const BIN = path.join(__dirname, '..', '..', 'bin');
-const CLI_DTD = path.join(BIN, 'dtd.js');
-const CLI_DAD = path.join(BIN, 'dad.js');
+const CLI_DTD = path.join(BIN, 'dtd.cjs');
+const CLI_DAD = path.join(BIN, 'dad.cjs');
 
 describe('cli', () => {
   describe('happy path', () => {

@@ -15,16 +15,17 @@ module.exports = function run(commands, options, callback) {
         const command = commands[index];
         const match = commands[index].match(bracketsRegEx);
         const argv = match ? parse(match[1]) : parse(command);
+        const args = argv.slice(1);
 
         !options.header || options.header(command);
-        spawn(argv[0], argv.slice(1), spawnOptions, (err, result) => {
+        spawn(argv[0], args, spawnOptions, (err, result) => {
           // suppress error
           if (err && match) {
             result = err;
             err = null;
           }
 
-          results.push({ index, command, error: err, result });
+          results.push({ index, command: argv[0], args, error: err, result });
           if (err && options.concurrency === 1) return cb(err); // break early
           cb();
         });
