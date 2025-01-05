@@ -30,18 +30,15 @@ export default (argv, name) => {
 
   options.stdio = 'inherit';
   disDat(args, options, (err, results) => {
-    if (err) {
-      console.log(err.message);
-      return exit(err.code || -1);
-    }
-    const errors = results.filter((result) => !!result.error);
+    if (err && err.message.indexOf('ExperimentalWarning') >= 0) err = null;
+    if (err) console.log(err.message);
 
+    const errors = results.filter((result) => !!result.error);
     if (!options.silent) {
       console.log('\n======================');
       console.log(`${name} "${args.join('" "')}" ${errors.length ? 'failed' : 'succeeded'}`);
       results.forEach((res) => console.log(`${res.error ? figures.cross : figures.tick} ${[res.command].concat(res.args).join(' ')}${res.error ? ` Error: ${res.error.message}` : ''}`));
     }
-
     exit(errors.length ? -1 : 0);
   });
 };

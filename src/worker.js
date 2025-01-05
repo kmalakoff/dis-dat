@@ -19,6 +19,11 @@ module.exports = function run(commands, options, callback) {
 
         !options.header || options.header(command);
         spawn(argv[0], args, spawnOptions, (err, result) => {
+          if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
+            res = err;
+            err = null;
+          }
+
           // suppress error
           if (err && match) {
             result = err;
