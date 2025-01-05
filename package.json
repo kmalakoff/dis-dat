@@ -48,16 +48,17 @@
   "dependencies": {
     "cross-spawn-cb": "^2.0.13",
     "exit": "^0.1.2",
+    "figures": "^6.1.0",
     "getopts-compat": "^2.2.5",
-    "queue-cb": "^1.4.9",
+    "queue-cb": "^1.4.10",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "cr": "^0.1.0",
-    "is-version": "^0.2.1",
+    "is-version": "^0.2.5",
     "pinkie-promise": "^2.0.1"
   },
   "engines": {
