@@ -48,7 +48,6 @@
   "dependencies": {
     "cross-spawn-cb": "^2.0.13",
     "exit": "^0.1.2",
-    "figures": "^6.1.0",
     "getopts-compat": "^2.2.5",
     "queue-cb": "^1.4.10",
     "string-argv": "^0.2.1"
