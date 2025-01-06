@@ -36,8 +36,9 @@ describe('library', () => {
       assert.ok(isVersion(cr(results[1].result.stdout).split('\n').slice(-2, -1)[0], 'v'));
     });
     it('handles errors - stops in dtd', (done) => {
-      disDat(['echo "hello"', 'this is an error', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err, results) => {
-        if (err) return done(err);
+      disDat(['echo "hello"', 'this is an error', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err) => {
+        assert.ok(!!err);
+        const results = err.results;
         assert.ok(results.length === 2);
         assert.equal(cr(results[0].result.stdout).split('\n').slice(-2, -1)[0], 'hello');
         assert.ok(results[1].error);

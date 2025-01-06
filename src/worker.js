@@ -9,37 +9,36 @@ module.exports = function run(commands, options, callback) {
   let results = [];
   const queue = new Queue(options.concurrency || Infinity);
 
-  for (let index = 0; index < commands.length; index++) {
-    ((index) => {
-      queue.defer((cb) => {
-        const command = commands[index];
-        const match = commands[index].match(bracketsRegEx);
-        const argv = match ? parse(match[1]) : parse(command);
-        const args = argv.slice(1);
+  commands.forEach((_command, index) => {
+    queue.defer((cb) => {
+      const command = commands[index];
+      const match = commands[index].match(bracketsRegEx);
+      const argv = match ? parse(match[1]) : parse(command);
+      const args = argv.slice(1);
 
-        !options.header || options.header(command);
-        spawn(argv[0], args, spawnOptions, (err, result) => {
-          if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
-            res = err;
-            err = null;
-          }
+      !options.header || options.header(command);
+      spawn(argv[0], args, spawnOptions, (err, result) => {
+        if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
+          res = err;
+          err = null;
+        }
 
-          // suppress error
-          if (err && match) {
-            result = err;
-            err = null;
-          }
+        // suppress error
+        if (err && match) {
+          result = err;
+          err = null;
+        }
 
-          results.push({ index, command: argv[0], args, error: err, result });
-          if (err && options.concurrency === 1) return cb(err); // break early
-          cb();
-        });
+        results.push({ index, command: argv[0], args, error: err, result });
+        if (err && options.concurrency === 1) return cb(err); // break early
+        cb();
       });
-    })(index);
-  }
+    });
+  });
 
-  queue.await(() => {
+  queue.await((err) => {
     results = results.sort((a, b) => a.index - b.index);
-    callback(null, results);
+    if (err) err.results = results;
+    err ? callback(err) : callback(null, results);
   });
 };
