@@ -1,4 +1,3 @@
-import './filterExperimental.cjs';
 import worker from './worker';
 
 export default function disDat(commands, options, callback) {
