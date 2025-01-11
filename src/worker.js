@@ -17,7 +17,7 @@ module.exports = function run(commands, options, callback) {
       const argv = match ? parse(match[1]) : parse(command);
       const args = argv.slice(1);
 
-      const process = (err, result) => {
+      const next = (err, result) => {
         if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
           res = err;
           err = null;
@@ -34,8 +34,8 @@ module.exports = function run(commands, options, callback) {
         cb();
       };
 
-      if (commands.length < 2) spawn(argv[0], args, spawnOptions, process);
-      else spawnStreaming(argv[0], args, spawnOptions, { prefix: command }, process);
+      if (commands.length < 2) spawn(argv[0], args, spawnOptions, next);
+      else spawnStreaming(argv[0], args, spawnOptions, { prefix: command }, next);
     });
   });
 
