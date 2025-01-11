@@ -1,6 +1,7 @@
 const Queue = require('queue-cb');
 const parse = require('string-argv').parseArgsStringToArgv;
 const spawn = require('cross-spawn-cb');
+const spawnStreaming = require('spawn-streaming');
 
 const bracketsRegEx = /\{([\s\S]*)\}/;
 
@@ -16,8 +17,7 @@ module.exports = function run(commands, options, callback) {
       const argv = match ? parse(match[1]) : parse(command);
       const args = argv.slice(1);
 
-      !options.header || options.header(command);
-      spawn(argv[0], args, spawnOptions, (err, result) => {
+      const process = (err, result) => {
         if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
           res = err;
           err = null;
@@ -32,7 +32,10 @@ module.exports = function run(commands, options, callback) {
         results.push({ index, command: argv[0], args, error: err, result });
         if (err && options.concurrency === 1) return cb(err); // break early
         cb();
-      });
+      };
+
+      if (commands.length < 2) spawn(argv[0], args, spawnOptions, process);
+      else spawnStreaming(argv[0], args, spawnOptions, { prefix: command }, process);
     });
   });
 

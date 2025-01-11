@@ -21,13 +21,6 @@ export default (argv, name) => {
     return exit(-1);
   }
 
-  if (!options.silent)
-    options.header = (command) => {
-      console.log('\n----------------------');
-      console.log(command);
-      console.log('----------------------');
-    };
-
   options.stdio = 'inherit';
   disDat(args, options, (err, results) => {
     if (err && err.message.indexOf('ExperimentalWarning') >= 0) err = null;

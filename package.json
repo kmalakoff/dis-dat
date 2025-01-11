@@ -46,8 +46,9 @@
   "dependencies": {
     "cross-spawn-cb": "^2.1.2",
     "exit": "^0.1.2",
-    "getopts-compat": "^2.2.5",
+    "getopts-compat": "^2.2.6",
     "queue-cb": "^1.4.10",
+    "spawn-streaming": "^1.0.0",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
