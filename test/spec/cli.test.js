@@ -14,8 +14,8 @@ describe('cli', () => {
       spawn(CLI_DTD, ['--silent', 'echo "hello"', 'node --version'], { encoding: 'utf8' }, (err, res) => {
         if (err) return done(err);
         const lines = cr(res.stdout).split('\n');
-        assert.equal(lines.slice(-3, -2)[0], 'hello');
-        assert.ok(isVersion(lines.slice(-2, -1)[0], 'v'));
+        assert.equal(lines.slice(-3, -2)[0].split(':')[1], 'hello');
+        assert.ok(isVersion(lines.slice(-2, -1)[0].split(':')[1], 'v'));
         done();
       });
     });
@@ -25,8 +25,8 @@ describe('cli', () => {
         if (err) return done(err);
         const lines = cr(res.stdout).split('\n');
         const versions = lines.slice(-3, -1);
-        assert.ok(versions[0] === 'hello' || isVersion(versions[0], 'v'));
-        assert.ok(versions[1] === 'hello' || isVersion(versions[1], 'v'));
+        assert.ok(versions[0].split(':')[1] === 'hello' || isVersion(versions[0].split(':')[1], 'v'));
+        assert.ok(versions[1].split(':')[1] === 'hello' || isVersion(versions[1].split(':')[1], 'v'));
         done();
       });
     });
@@ -36,7 +36,7 @@ describe('cli', () => {
         const lines = cr(err.stdout).split('\n');
         const versions = lines.slice(-3, -1);
         assert.equal(versions.length, 2);
-        assert.equal(versions[0], 'hello');
+        assert.equal(versions[0].split(':')[1], 'hello');
         done();
       });
     });
@@ -46,7 +46,7 @@ describe('cli', () => {
         const lines = cr(res.stdout).split('\n');
         const versions = lines.slice(-3, -1);
         assert.equal(versions.length, 2);
-        assert.equal(versions[0], 'hello');
+        assert.equal(versions[0].split(':')[1], 'hello');
         done();
       });
     });
@@ -56,8 +56,8 @@ describe('cli', () => {
         const lines = cr(err.stdout).split('\n');
         const versions = lines.slice(-3, -1);
         assert.equal(versions.length, 2);
-        assert.ok(versions[0] === 'hello' || isVersion(versions[0], 'v'));
-        assert.ok(versions[1] === 'hello' || isVersion(versions[1], 'v'));
+        assert.ok(versions[0].split(':')[1] === 'hello' || isVersion(versions[0].split(':')[1], 'v'));
+        assert.ok(versions[1].split(':')[1] === 'hello' || isVersion(versions[1].split(':')[1], 'v'));
         done();
       });
     });
@@ -67,8 +67,8 @@ describe('cli', () => {
         const lines = cr(res.stdout).split('\n');
         const versions = lines.slice(-3, -1);
         assert.equal(versions.length, 2);
-        assert.ok(versions[0] === 'hello' || isVersion(versions[0], 'v'));
-        assert.ok(versions[1] === 'hello' || isVersion(versions[1], 'v'));
+        assert.ok(versions[0].split(':')[1] === 'hello' || isVersion(versions[0].split(':')[1], 'v'));
+        assert.ok(versions[1].split(':')[1] === 'hello' || isVersion(versions[1].split(':')[1], 'v'));
         done();
       });
     });
