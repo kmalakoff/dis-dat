@@ -17,7 +17,7 @@ module.exports = function run(commands, options, callback) {
       const argv = match ? parse(match[1]) : parse(command);
       const args = argv.slice(1);
 
-      const next = (err, result) => {
+      const next = (err, res) => {
         if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
           res = err;
           err = null;
@@ -25,11 +25,11 @@ module.exports = function run(commands, options, callback) {
 
         // suppress error
         if (err && match) {
-          result = err;
+          res = err;
           err = null;
         }
 
-        results.push({ index, command: argv[0], args, error: err, result });
+        results.push({ index, command: argv[0], args, error: err, result: res });
         if (err && options.concurrency === 1) return cb(err); // break early
         cb();
       };
