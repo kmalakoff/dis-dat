@@ -18,7 +18,7 @@ export default (argv, name) => {
   const args = options._;
   if (!args.length) {
     console.log(`Missing command. Example usage: ${name} [command]`);
-    return exit(1);
+    return exit(2);
   }
 
   options.stdio = 'inherit';
@@ -35,6 +35,6 @@ export default (argv, name) => {
       console.log(`${name} "${args.join('" "')}" ${errors.length ? 'failed' : 'succeeded'}`);
       results.forEach((res) => console.log(`${res.error ? figures.cross : figures.tick} ${[res.command].concat(res.args).join(' ')}${res.error ? ` Error: ${res.error.message}` : ''}`));
     }
-    exit(err || errors.length ? 1 : 0);
+    exit(err || errors.length ? 3 : 0);
   });
 };
