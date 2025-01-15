@@ -34,7 +34,7 @@ export default (argv, name) => {
       console.log('\n======================');
       results.forEach((res) => console.log(`${res.error ? figures.cross : figures.tick} ${[res.command].concat(res.args).join(' ')}${res.error ? ` Error: ${res.error.message}` : ''}`));
       console.log('\n----------------------');
-      console.log(`${name} ${args.map(x => x.indexOf(' ') >= 0 ? `"${x}"` : x).join(' ')}\n${errors.length ? `${errors.length} failed` : `${results.length - errors.length} succeeded`}`);
+      console.log(`${name} ${args.map(x => x.indexOf(' ') >= 0 ? `"${x}"` : x).join(' ')}\n${errors.length ? `${figures.cross} ${errors.length} failed` : `${figures.tick} ${results.length - errors.length} succeeded`}`);
     }
     exit(err || errors.length ? 3 : 0);
   });
