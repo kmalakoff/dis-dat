@@ -12,7 +12,7 @@ describe('cli', () => {
   describe('happy path', () => {
     it('basic command - sequential', (done) => {
       spawn(CLI_DTD, ['--silent', 'echo "hello"', 'node --version'], { encoding: 'utf8' }, (err, res) => {
-        if (err) return done(err);
+        if (err) return done(err.message);
         const lines = getLines(res.stdout);
         assert.equal(lines.slice(-2)[0], 'hello');
         assert.ok(isVersion(lines.slice(-1)[0], 'v'));
@@ -22,7 +22,7 @@ describe('cli', () => {
 
     it('basic command - parallel', (done) => {
       spawn(CLI_DAD, ['--silent', 'echo "hello"', 'node --version'], { encoding: 'utf8' }, (err, res) => {
-        if (err) return done(err);
+        if (err) return done(err.message);
         const lines = getLines(res.stdout);
         const versions = lines.slice(-2);
         assert.ok(versions[0] === 'hello' || isVersion(versions[0], 'v'));

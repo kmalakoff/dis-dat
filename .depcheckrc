@@ -1,1 +1,1 @@
-ignores: ["@types/*", "dis-dat", "@biomejs/*"]
+ignores: ["dis-dat"]
