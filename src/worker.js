@@ -10,11 +10,11 @@ module.exports = function run(commands, options, callback) {
   let results = [];
   const queue = new Queue(options.concurrency || Infinity);
 
-  commands.forEach((_command, index) => {
+  commands.forEach((_, index) => {
     queue.defer((cb) => {
-      const command = commands[index];
       const match = commands[index].match(bracketsRegEx);
-      const argv = match ? parse(match[1]) : parse(command);
+      const argv = match ? parse(match[1]) : parse(commands[index]);
+      const command = argv[0];
       const args = argv.slice(1);
 
       const next = (err, res) => {
@@ -29,13 +29,13 @@ module.exports = function run(commands, options, callback) {
           err = null;
         }
 
-        results.push({ index, command: argv[0], args, error: err, result: res });
+        results.push({ index, command, args, error: err, result: res });
         if (err && options.concurrency === 1) return cb(err); // break early
         cb();
       };
 
-      if (commands.length < 2) spawn(argv[0], args, spawnOptions, next);
-      else spawnStreaming(argv[0], args, spawnOptions, { prefix: command }, next);
+      if (commands.length < 2) spawn(command, args, spawnOptions, next);
+      else spawnStreaming(command, args, spawnOptions, { prefix: command }, next);
     });
   });
 
