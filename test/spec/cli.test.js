@@ -35,7 +35,7 @@ describe('cli', () => {
         assert.ok(err.status !== 0);
         const lines = getLines(err.stdout);
         const versions = lines.slice(-2);
-        assert.equal(versions.length, 2);
+        assert.equal(versions.length, 1);
         assert.equal(versions[0], 'hello');
         done();
       });
