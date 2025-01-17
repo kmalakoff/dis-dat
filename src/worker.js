@@ -35,7 +35,7 @@ module.exports = function run(commands, options, callback) {
       };
 
       if (commands.length < 2) spawn(command, args, spawnOptions, next);
-      else spawnStreaming(command, args, spawnOptions, { prefix: argv.map((x) => (x.indexOf(' ') >= 0 ? `"${x}"` : x)).join(' ') }, next);
+      else spawnStreaming(command, args, spawnOptions, { prefix: argv.join(' ') }, next);
     });
   });
 
