@@ -44,11 +44,11 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "cross-spawn-cb": "^2.1.19",
+    "cross-spawn-cb": "^2.1.20",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.6",
-    "queue-cb": "^1.4.15",
-    "spawn-streaming": "^1.0.24",
+    "queue-cb": "^1.4.16",
+    "spawn-streaming": "^1.0.25",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
