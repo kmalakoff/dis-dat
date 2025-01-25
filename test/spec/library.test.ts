@@ -1,8 +1,10 @@
-const assert = require('assert');
-const isVersion = require('is-version');
-const getLines = require('../lib/getLines.cjs');
+import assert from 'assert';
+import isVersion from 'is-version';
+import Pinkie from 'pinkie-promise';
+import getLines from '../lib/getLines.cjs';
 
-const disDat = require('dis-dat');
+// @ts-ignore
+import disDat from 'dis-dat';
 
 function isError(obj) {
   return Object.prototype.toString.call(obj) === '[object Error]';
@@ -11,10 +13,11 @@ function isError(obj) {
 describe('library', () => {
   (() => {
     // patch and restore promise
-    let rootPromise;
+    // @ts-ignore
+    let rootPromise: Promise;
     before(() => {
       rootPromise = global.Promise;
-      global.Promise = require('pinkie-promise');
+      global.Promise = Pinkie;
     });
     after(() => {
       global.Promise = rootPromise;

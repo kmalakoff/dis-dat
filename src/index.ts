@@ -1,5 +1,6 @@
 import worker from './worker';
 
+export * from './types';
 export default function disDat(commands, options, callback) {
   if (typeof options === 'function') {
     callback = options;

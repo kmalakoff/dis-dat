@@ -1,15 +1,15 @@
 import exit from 'exit';
 import getopts from 'getopts-compat';
-import { figures } from 'spawn-term';
-import run from './index.mjs';
+import spawnTerm, { figures, formatArguments } from 'spawn-term';
+import run from './index.js';
 
 const ERROR_CODE = 3;
 
 export default (argv, name) => {
   const options = getopts(argv, {
-    alias: { silent: 's', concurrency: 'c' },
-    boolean: ['silent'],
-    default: { concurrency: name === 'dtd' ? 1 : Infinity },
+    alias: { silent: 's', concurrency: 'c', expanded: 'e' },
+    boolean: ['silent', 'expanded'],
+    default: { silent: false, concurrency: name === 'dtd' ? 1 : Infinity, expanded: false },
     stopEarly: true,
   });
 
@@ -29,10 +29,12 @@ export default (argv, name) => {
     const errors = results.filter((result) => !!result.error);
 
     if (!options.silent) {
-      console.log('\n======================');
-      results.forEach((res) => console.log(`${res.error ? figures.cross : figures.tick} ${[res.command].concat(res.args).join(' ')}${res.error ? ` Error: ${res.error.message}` : ''}`));
+      if (!spawnTerm) {
+        console.log('\n======================');
+        results.forEach((res) => console.log(`${res.error ? figures.cross : figures.tick} ${formatArguments([res.command].concat(res.args))}${res.error ? ` Error: ${res.error.message}` : ''}`));
+      }
       console.log('\n----------------------');
-      console.log(`${name} ${args.map((x) => (x.indexOf(' ') >= 0 ? `"${x}"` : x)).join(' ')}`);
+      console.log(`${name} ${formatArguments(args).join(' ')}`);
       console.log(`${figures.tick} ${results.length - errors.length} succeeded`);
       if (errors.length) console.log(`${figures.cross} ${errors.length} failed`);
     }
