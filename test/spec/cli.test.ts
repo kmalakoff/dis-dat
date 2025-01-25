@@ -3,8 +3,6 @@ import path from 'path';
 import url from 'url';
 import cr from 'cr';
 import spawn from 'cross-spawn-cb';
-import isVersion from 'is-version';
-import getLines from '../lib/getLines.cjs';
 
 const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
 const BIN = path.join(__dirname, '..', '..', 'bin');
