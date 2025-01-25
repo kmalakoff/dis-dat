@@ -1,11 +1,13 @@
-const Queue = require('queue-cb');
-const parse = require('string-argv').parseArgsStringToArgv;
-const spawn = require('cross-spawn-cb');
-const spawnStreaming = require('spawn-streaming');
+import spawn from 'cross-spawn-cb';
+import Queue from 'queue-cb';
+import spawnStreaming from 'spawn-streaming';
+import spawnTerm from 'spawn-term';
+import { parseArgsStringToArgv } from 'string-argv';
 
 const bracketsRegEx = /\{([\s\S]*)\}/;
 
-module.exports = function run(commands, options, callback) {
+import type { SpawnError } from './types';
+export default function worker(commands, options, callback) {
   const spawnOptions = { cwd: process.cwd(), ...options };
   let results = [];
   const queue = new Queue(options.concurrency || Infinity);
@@ -13,7 +15,7 @@ module.exports = function run(commands, options, callback) {
   commands.forEach((_, index) => {
     queue.defer((cb) => {
       const match = commands[index].match(bracketsRegEx);
-      const argv = match ? parse(match[1]) : parse(commands[index]);
+      const argv = match ? parseArgsStringToArgv(match[1]) : parseArgsStringToArgv(commands[index]);
       const command = argv[0];
       const args = argv.slice(1);
       const prefix = argv.join(' ');
@@ -36,13 +38,14 @@ module.exports = function run(commands, options, callback) {
       };
 
       if (commands.length < 2) spawn(command, args, spawnOptions, next);
+      else if (spawnTerm) spawnTerm(command, args, spawnOptions, { expanded: options.expanded }, next);
       else spawnStreaming(command, args, spawnOptions, { prefix }, next);
     });
   });
 
   queue.await((err) => {
     results = results.sort((a, b) => a.index - b.index);
-    if (err) err.results = results;
+    if (err) (err as SpawnError).results = results;
     err ? callback(err) : callback(null, results);
   });
-};
+}
