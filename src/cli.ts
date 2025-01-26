@@ -7,9 +7,9 @@ const ERROR_CODE = 3;
 
 export default (argv, name) => {
   const options = getopts(argv, {
-    alias: { silent: 's', concurrency: 'c', expanded: 'e' },
-    boolean: ['silent', 'expanded'],
-    default: { silent: false, concurrency: name === 'dtd' ? 1 : Infinity, expanded: false },
+    alias: { silent: 'si', concurrency: 'c', expanded: 'e', streaming: 's' },
+    boolean: ['silent', 'expanded', 'streaming'],
+    default: { concurrency: name === 'dtd' ? 1 : Infinity },
     stopEarly: true,
   });
 

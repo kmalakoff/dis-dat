@@ -38,7 +38,7 @@ export default function worker(commands, options, callback) {
       };
 
       if (commands.length < 2) spawn(command, args, spawnOptions, next);
-      else if (spawnTerm) spawnTerm(command, args, spawnOptions, { expanded: options.expanded }, next);
+      else if (spawnTerm && !options.streaming) spawnTerm(command, args, spawnOptions, { expanded: options.expanded }, next);
       else spawnStreaming(command, args, spawnOptions, { prefix }, next);
     });
   });
