@@ -50,7 +50,7 @@ describe('cli', () => {
       });
     });
     it('handles errors - stops in dad', (done) => {
-      spawn(CLI_DAD, ['--silent', '--expanded', 'echo "hello"', 'this is an error', `${NODE} --version`], { encoding: 'utf8' }, (err, _res) => {
+      spawn(CLI_DAD, ['--silent', '--expanded', 'echo "hello"', 'this is an error', `${NODE} --version`], { encoding: 'utf8' }, (err) => {
         assert.ok(err.status !== 0);
         assert.ok(err.stdout.indexOf('hello') >= 0);
         assert.ok(err.stdout.indexOf(VERSION) >= 0);
