@@ -28,13 +28,14 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "import": "./dist/esm/index.mjs",
-    "require": "./dist/cjs/index.cjs",
-    "types": "./dist/types/index.d.ts"
+    ".": {
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "main": "dist/cjs/index.cjs",
-  "module": "dist/dist/esm/index.mjs",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/cjs/index.d.cts",
   "bin": {
     "dad": "./bin/dad.cjs",
     "dtd": "./bin/dtd.cjs"
@@ -51,12 +52,12 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "cross-spawn-cb": "^2.1.23",
+    "cross-spawn-cb": "^2.1.24",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.6",
-    "queue-cb": "^1.4.16",
-    "spawn-streaming": "^1.0.32",
-    "spawn-term": "^0.1.50",
+    "queue-cb": "^1.4.17",
+    "spawn-streaming": "^1.0.33",
+    "spawn-term": "^0.1.51",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
