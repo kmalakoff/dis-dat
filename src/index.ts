@@ -1,6 +1,6 @@
-import worker from './worker';
+import worker from './worker.js';
 
-export * from './types';
+export * from './types.js';
 export default function disDat(commands, options, callback) {
   if (typeof options === 'function') {
     callback = options;
