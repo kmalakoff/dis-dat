@@ -6,7 +6,7 @@ import { parseArgsStringToArgv } from 'string-argv';
 
 const bracketsRegEx = /\{([\s\S]*)\}/;
 
-import type { SpawnError } from './types';
+import type { SpawnError } from './types.js';
 export default function worker(commands, options, callback) {
   const spawnOptions = { cwd: process.cwd(), ...options };
   let results = [];
