@@ -52,12 +52,12 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "cross-spawn-cb": "^2.2.2",
+    "cross-spawn-cb": "^2.2.3",
     "exit": "^0.1.2",
     "getopts-compat": "^2.2.6",
     "queue-cb": "^1.5.0",
-    "spawn-streaming": "^1.0.35",
-    "spawn-term": "^0.1.53",
+    "spawn-streaming": "^1.0.36",
+    "spawn-term": "^0.1.54",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
