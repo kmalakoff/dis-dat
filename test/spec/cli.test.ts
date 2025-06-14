@@ -43,6 +43,7 @@ describe('cli', () => {
     });
     it('handles errors - suppresses in dtd', (done) => {
       spawn(CLI_DTD, ['--silent', '--expanded', 'echo "hello"', '{this is an error}', `${NODE} --version`], { encoding: 'utf8' }, (err, res) => {
+        console.log(err, res);
         assert.ok(!err);
         assert.ok(res.stdout.indexOf('hello') >= 0);
         assert.ok(res.stdout.indexOf(VERSION) >= 0);

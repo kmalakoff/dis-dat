@@ -4,6 +4,8 @@ import spawnTerm, { figures, formatArguments } from 'spawn-term';
 import run from './index.js';
 
 const ERROR_CODE = 3;
+const _isWindows = process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE);
+const _major = +process.versions.node.split('.')[0];
 
 export default (argv, name) => {
   const options = getopts(argv, {
@@ -38,6 +40,7 @@ export default (argv, name) => {
       console.log(`${figures.tick} ${results.length - errors.length} succeeded`);
       if (errors.length) console.log(`${figures.cross} ${errors.length} failed`);
     }
+
     exit(err || errors.length ? ERROR_CODE : 0);
   });
 };
