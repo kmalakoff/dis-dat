@@ -20,7 +20,7 @@ export default function worker(commands, options, callback) {
       const args = argv.slice(1);
       const prefix = argv.join(' ');
 
-      const next = (err, res) => {
+      function next(err?, res?): undefined {
         if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
           res = err;
           err = null;
@@ -33,9 +33,12 @@ export default function worker(commands, options, callback) {
         }
 
         results.push({ index, command, args, error: err, result: res });
-        if (err && options.concurrency === 1) return cb(err); // break early
+        if (err && options.concurrency === 1) {
+          cb(err); // break early
+          return;
+        }
         cb();
-      };
+      }
 
       if (commands.length < 2) spawn(command, args, spawnOptions, next);
       else if (spawnTerm && !options.streaming) spawnTerm(command, args, spawnOptions, { expanded: options.expanded }, next);
