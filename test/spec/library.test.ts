@@ -1,10 +1,9 @@
 import assert from 'assert';
+// @ts-ignore
+import disDat from 'dis-dat';
 import isVersion from 'is-version';
 import Pinkie from 'pinkie-promise';
 import getLines from '../lib/getLines.cjs';
-
-// @ts-ignore
-import disDat from 'dis-dat';
 
 function isError(obj) {
   return Object.prototype.toString.call(obj) === '[object Error]';
