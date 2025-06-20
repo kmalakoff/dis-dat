@@ -37,8 +37,8 @@
   "main": "dist/cjs/index.js",
   "types": "dist/cjs/index.d.cts",
   "bin": {
-    "dad": "./bin/dad",
-    "dtd": "./bin/dtd"
+    "dad": "./bin/dad.js",
+    "dtd": "./bin/dtd.js"
   },
   "files": [
     "dist",
