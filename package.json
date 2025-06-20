@@ -37,8 +37,8 @@
   "main": "dist/cjs/index.js",
   "types": "dist/cjs/index.d.cts",
   "bin": {
-    "dad": "./bin/dad.cjs",
-    "dtd": "./bin/dtd.cjs"
+    "dad": "./bin/dad",
+    "dtd": "./bin/dtd"
   },
   "files": [
     "dist",
@@ -57,7 +57,7 @@
     "getopts-compat": "^2.2.6",
     "queue-cb": "^1.5.3",
     "spawn-streaming": "^1.0.42",
-    "spawn-term": "^1.0.2",
+    "spawn-term": "^1.0.3",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
