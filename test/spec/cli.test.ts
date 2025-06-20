@@ -6,8 +6,8 @@ import url from 'url';
 
 const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
 const BIN = path.join(__dirname, '..', '..', 'bin');
-const CLI_DTD = path.join(BIN, 'dtd');
-const CLI_DAD = path.join(BIN, 'dad');
+const CLI_DTD = path.join(BIN, 'dtd.js');
+const CLI_DAD = path.join(BIN, 'dad.js');
 
 const isWindows = process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE);
 const NODE = isWindows ? 'node.exe' : 'node';
