@@ -57,7 +57,7 @@
     "getopts-compat": "^2.2.6",
     "queue-cb": "^1.5.3",
     "spawn-streaming": "^1.0.42",
-    "spawn-term": "^1.0.3",
+    "spawn-term": "^1.0.4",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
