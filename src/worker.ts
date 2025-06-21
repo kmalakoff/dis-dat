@@ -6,8 +6,9 @@ import { parseArgsStringToArgv } from 'string-argv';
 
 const bracketsRegEx = /\{([\s\S]*)\}/;
 
-import type { SpawnError } from './types.js';
-export default function worker(commands, options, callback) {
+import type { DisDatCallback, DisDatError, DisDatOptions } from './types.ts';
+
+export default function worker(commands: string[], options: DisDatOptions, callback: DisDatCallback): undefined {
   const spawnOptions = { cwd: process.cwd(), ...options };
   let results = [];
   const queue = new Queue(options.concurrency || Infinity);
@@ -48,7 +49,7 @@ export default function worker(commands, options, callback) {
 
   queue.await((err) => {
     results = results.sort((a, b) => a.index - b.index);
-    if (err) (err as SpawnError).results = results;
+    if (err) (err as DisDatError).results = results;
     err ? callback(err) : callback(null, results);
   });
 }

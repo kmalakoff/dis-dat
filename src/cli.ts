@@ -1,13 +1,13 @@
 import exit from 'exit';
 import getopts from 'getopts-compat';
 import spawnTerm, { figures, formatArguments } from 'spawn-term';
-import run from './index.js';
+import run from './index.ts';
 
 const ERROR_CODE = 3;
-const _isWindows = process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE);
-const _major = +process.versions.node.split('.')[0];
 
-export default (argv, name) => {
+import type { DisDatError, DisDatOptions, DisDatResult } from './types.ts';
+
+export default (argv: string[], name: string): undefined => {
   const options = getopts(argv, {
     alias: { silent: 'si', concurrency: 'c', expanded: 'e', streaming: 's' },
     boolean: ['silent', 'expanded', 'streaming'],
@@ -22,7 +22,7 @@ export default (argv, name) => {
   }
 
   options.stdio = 'inherit'; // pass through stdio
-  return run(args, options, (err, results) => {
+  run(args, options as DisDatOptions, (err?: DisDatError, results?: DisDatResult[]): undefined => {
     if (err && !err.results) {
       console.log(err.message);
       return exit(ERROR_CODE);
