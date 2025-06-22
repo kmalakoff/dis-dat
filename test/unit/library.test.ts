@@ -3,7 +3,7 @@ import assert from 'assert';
 import disDat from 'dis-dat';
 import isVersion from 'is-version';
 import Pinkie from 'pinkie-promise';
-import getLines from '../lib/getLines.cjs';
+import getLines from '../lib/getLines.ts';
 
 function isError(obj) {
   return Object.prototype.toString.call(obj) === '[object Error]';
@@ -25,7 +25,10 @@ describe('library', () => {
   describe('sequential', () => {
     it('basic command', (done) => {
       disDat(['echo "hello"', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err, results) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
         assert.equal(getLines(results[0].result.stdout).slice(-2)[0], 'hello');
         assert.ok(isVersion(getLines(results[1].result.stdout).slice(-2)[0], 'v'));
         done();
@@ -48,7 +51,10 @@ describe('library', () => {
     });
     it('handles errors - suppresses in dtd', (done) => {
       disDat(['echo "hello"', '{this is an error}', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err, results) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
         assert.ok(results.length === 3);
         assert.equal(getLines(results[0].result.stdout).slice(-2)[0], 'hello');
         assert.ok(!results[1].error);
@@ -62,7 +68,10 @@ describe('library', () => {
   describe('parallel', () => {
     it('basic command', (done) => {
       disDat(['echo "hello"', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
         assert.equal(getLines(results[0].result.stdout).slice(-2)[0], 'hello');
         assert.ok(isVersion(getLines(results[1].result.stdout).slice(-2)[0], 'v'));
         done();
@@ -75,7 +84,10 @@ describe('library', () => {
     });
     it('handles errors - continues in dad', (done) => {
       disDat(['echo "hello"', 'this is an error', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
         assert.ok(results.length === 3);
         assert.equal(getLines(results[0].result.stdout).slice(-2)[0], 'hello');
         assert.ok(results[1].error);
@@ -85,7 +97,10 @@ describe('library', () => {
     });
     it('handles errors - suppresses in dad', (done) => {
       disDat(['echo "hello"', '{this is an error}', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
         assert.ok(results.length === 3);
         assert.equal(getLines(results[0].result.stdout).slice(-2)[0], 'hello');
         assert.ok(!results[1].error);

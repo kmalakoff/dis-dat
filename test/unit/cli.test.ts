@@ -18,7 +18,10 @@ describe('cli', () => {
   describe('happy path', () => {
     it('basic command - sequential', (done) => {
       spawn(CLI_DTD, ['--silent', '--expanded', 'echo "hello"', `${NODE} --version`], { encoding: 'utf8' }, (err, res) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
         assert.ok(res.stdout.indexOf('hello') >= 0);
         assert.ok(res.stdout.indexOf(VERSION) >= 0);
         done();
@@ -27,7 +30,10 @@ describe('cli', () => {
 
     it('basic command - parallel', (done) => {
       spawn(CLI_DAD, ['--silent', '--expanded', 'echo "hello"', `${NODE} --version`], { encoding: 'utf8' }, (err, res) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
         assert.ok(res.stdout.indexOf('hello') >= 0);
         assert.ok(res.stdout.indexOf(VERSION) >= 0);
         done();
