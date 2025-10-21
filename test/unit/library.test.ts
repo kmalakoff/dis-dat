@@ -1,5 +1,4 @@
 import assert from 'assert';
-// @ts-ignore
 import disDat from 'dis-dat';
 import isVersion from 'is-version';
 import Pinkie from 'pinkie-promise';
