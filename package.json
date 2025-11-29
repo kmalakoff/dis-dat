@@ -1,6 +1,6 @@
 {
   "name": "dis-dat",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "Run commands in parallel (dad / dis-and-dat) or sequentially (dtd / dis-then-dat)",
   "keywords": [
     "this",
@@ -47,6 +47,7 @@
   "scripts": {
     "build": "tsds build",
     "format": "biome check --write --unsafe",
+    "prepublishOnly": "tsds validate",
     "test": "mocha --no-timeouts test/**/*.test.*",
     "test:engines": "nvu engines tsds test:node --no-timeouts",
     "version": "tsds version"
@@ -55,9 +56,9 @@
     "cross-spawn-cb": "*",
     "exit": "*",
     "getopts-compat": "*",
+    "install-module-linked": "*",
     "queue-cb": "*",
     "spawn-streaming": "*",
-    "spawn-term": "*",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
