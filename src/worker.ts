@@ -12,11 +12,14 @@ export default function worker(commands: string[], options: DisDatOptions, callb
   // Load spawn-term lazily
   loadSpawnTerm((loadErr, mod) => {
     if (loadErr) return callback(loadErr);
-    const spawnTerm = mod.spawnTerm;
+    const createSession = mod.createSession;
 
     const spawnOptions = { cwd: process.cwd(), ...options } as SpawnOptions;
     let results = [];
     const queue = new Queue(options.concurrency || Infinity);
+
+    // Create session once for all processes (only if multiple commands)
+    const session = commands.length >= 2 && createSession && !options.streaming ? createSession({ header: commands.join(' | ') }) : null;
 
     commands.forEach((_, index) => {
       queue.defer((cb) => {
@@ -47,7 +50,7 @@ export default function worker(commands: string[], options: DisDatOptions, callb
         }
 
         if (commands.length < 2) spawn(command, args, spawnOptions, next);
-        else if (spawnTerm && !options.streaming) spawnTerm(command, args, spawnOptions, { expanded: options.expanded, header: commands.join(' | ') }, next);
+        else if (session) session.spawn(command, args, spawnOptions, { expanded: options.expanded }, next);
         else spawnStreaming(command, args, spawnOptions, { prefix }, next);
       });
     });
@@ -55,7 +58,13 @@ export default function worker(commands: string[], options: DisDatOptions, callb
     queue.await((err) => {
       results = results.sort((a, b) => a.index - b.index);
       if (err) (err as DisDatError).results = results;
-      err ? callback(err) : callback(null, results);
+      if (session) {
+        session.waitAndClose(() => {
+          err ? callback(err) : callback(null, results);
+        });
+      } else {
+        err ? callback(err) : callback(null, results);
+      }
     });
   });
 }
