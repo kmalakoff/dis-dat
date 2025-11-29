@@ -32,8 +32,9 @@ export default (argv: string[], name: string): undefined => {
 
     if (!options.silent) {
       // Load spawn-term to get figures/formatArguments for output formatting
-      loadSpawnTerm((_loadErr, { spawnTerm, figures, formatArguments }) => {
-        if (!spawnTerm) {
+      loadSpawnTerm((_loadErr, mod) => {
+        const { createSession, figures, formatArguments } = mod || { createSession: undefined, figures: { tick: '✓', cross: '✗' }, formatArguments: (x: string[]) => x };
+        if (!createSession) {
           console.log('\n======================');
           results.forEach((res) => {
             console.log(`${res.error ? figures.cross : figures.tick} ${formatArguments([res.command].concat(res.args))}${res.error ? ` Error: ${res.error.message}` : ''}`);
