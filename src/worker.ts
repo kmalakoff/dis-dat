@@ -10,8 +10,9 @@ import type { DisDatCallback, DisDatError, DisDatOptions } from './types.ts';
 
 export default function worker(commands: string[], options: DisDatOptions, callback: DisDatCallback): undefined {
   // Load spawn-term lazily
-  loadSpawnTerm((loadErr, { spawnTerm }) => {
+  loadSpawnTerm((loadErr, mod) => {
     if (loadErr) return callback(loadErr);
+    const spawnTerm = mod.spawnTerm;
 
     const spawnOptions = { cwd: process.cwd(), ...options } as SpawnOptions;
     let results = [];
