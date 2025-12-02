@@ -1,1 +1,1 @@
-ignores: ["dis-dat"]
+ignores: ["node-version-use", "ts-dev-stack", "@biomejs/biome", "dis-dat"]

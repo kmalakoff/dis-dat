@@ -19,7 +19,8 @@ export default function worker(commands: string[], options: DisDatOptions, callb
     const queue = new Queue(options.concurrency || Infinity);
 
     // Create session once for all processes (only if multiple commands)
-    const session = commands.length >= 2 && createSession && !options.streaming ? createSession({ header: commands.join(' | ') }) : null;
+    const interactive = !!options.interactive;
+    const session = commands.length >= 2 && createSession && !options.streaming ? createSession({ header: commands.join(' | '), interactive }) : null;
 
     commands.forEach((_, index) => {
       queue.defer((cb) => {
