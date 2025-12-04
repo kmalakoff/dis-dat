@@ -1,6 +1,6 @@
 {
   "name": "dis-dat",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Run commands in parallel (dad / dis-and-dat) or sequentially (dtd / dis-then-dat)",
   "keywords": [
     "this",
