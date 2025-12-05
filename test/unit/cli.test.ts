@@ -104,7 +104,7 @@ describe('cli', () => {
     it('basic command - sequential', (done) => {
       spawn(CLI_DTD, ['--silent', '--streaming', '--expanded', 'echo "hello"', `${NODE} --version`], { encoding: 'utf8' }, (err, res) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
         assert.ok(res.stdout.indexOf('hello') >= 0);
@@ -116,7 +116,7 @@ describe('cli', () => {
     it('basic command - parallel', (done) => {
       spawn(CLI_DAD, ['--silent', '--streaming', '--expanded', 'echo "hello"', `${NODE} --version`], { encoding: 'utf8' }, (err, res) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
         assert.ok(res.stdout.indexOf('hello') >= 0);
