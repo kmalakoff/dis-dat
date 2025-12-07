@@ -17,6 +17,7 @@ export interface DisDatOptions extends SpawnOptions {
   streaming?: boolean;
   expanded?: boolean;
   interactive?: boolean;
+  silent?: boolean;
 }
 
 export type DisDatCallback = (err?: DisDatError, results?: DisDatResult[]) => undefined;
