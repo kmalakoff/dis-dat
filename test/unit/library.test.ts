@@ -25,7 +25,7 @@ describe('library', () => {
     it('basic command', (done) => {
       disDat(['echo "hello"', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err, results) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
         assert.equal(getLines(results[0].result.stdout).slice(-2)[0], 'hello');
@@ -51,7 +51,7 @@ describe('library', () => {
     it('handles errors - suppresses in dtd', (done) => {
       disDat(['echo "hello"', '{this is an error}', 'node --version'], { concurrency: 1, encoding: 'utf8' }, (err, results) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
         assert.ok(results.length === 3);
@@ -68,7 +68,7 @@ describe('library', () => {
     it('basic command', (done) => {
       disDat(['echo "hello"', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
         assert.equal(getLines(results[0].result.stdout).slice(-2)[0], 'hello');
@@ -84,7 +84,7 @@ describe('library', () => {
     it('handles errors - continues in dad', (done) => {
       disDat(['echo "hello"', 'this is an error', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
         assert.ok(results.length === 3);
@@ -97,7 +97,7 @@ describe('library', () => {
     it('handles errors - suppresses in dad', (done) => {
       disDat(['echo "hello"', '{this is an error}', 'node --version'], { concurrency: Infinity, encoding: 'utf8' }, (err, results) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
         assert.ok(results.length === 3);

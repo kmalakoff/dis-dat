@@ -28,7 +28,7 @@ export default function worker(commands: string[], options: DisDatOptions, callb
         const argv = match ? parseArgsStringToArgv(match[1]) : parseArgsStringToArgv(commands[index]);
         const command = argv[0];
         const args = argv.slice(1);
-        const prefix = argv.join(' ');
+        const prefix = mod.formatArguments(argv).join(' ');
 
         function next(err?, res?): undefined {
           if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
@@ -50,8 +50,11 @@ export default function worker(commands: string[], options: DisDatOptions, callb
           cb();
         }
 
-        if (commands.length < 2) spawn(command, args, spawnOptions, next);
-        else if (session) session.spawn(command, args, spawnOptions, { expanded: options.expanded }, next);
+        if (commands.length < 2) {
+          // Show command when running single command (no terminal session)
+          console.log(`$ ${mod.formatArguments([command].concat(args)).join(' ')}`);
+          spawn(command, args, spawnOptions, next);
+        } else if (session) session.spawn(command, args, spawnOptions, { expanded: options.expanded }, next);
         else spawnStreaming(command, args, spawnOptions, { prefix }, next);
       });
     });
