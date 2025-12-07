@@ -51,8 +51,8 @@ export default function worker(commands: string[], options: DisDatOptions, callb
         }
 
         if (commands.length < 2) {
-          // Show command when running single command (no terminal session)
-          console.log(`$ ${mod.formatArguments([command].concat(args)).join(' ')}`);
+          // Show command when running single command (no terminal session, unless silent)
+          if (!options.silent) console.log(`$ ${mod.formatArguments([command].concat(args)).join(' ')}`);
           spawn(command, args, spawnOptions, next);
         } else if (session) session.spawn(command, args, spawnOptions, { expanded: options.expanded }, next);
         else spawnStreaming(command, args, spawnOptions, { prefix }, next);
