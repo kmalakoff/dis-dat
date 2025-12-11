@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "cross-spawn-cb": "^2.4.10",
-    "exit": "^0.1.2",
+    "exit-compat": "^1.0.0",
     "getopts-compat": "^2.2.6",
     "queue-cb": "^1.6.1",
     "spawn-streaming": "^1.1.13",
@@ -67,7 +67,7 @@
     "@types/node": "^25.0.0",
     "cr": "^0.1.0",
     "is-version": "^1.0.7",
-    "node-version-use": "^2.0.0",
+    "node-version-use": "^2.1.0",
     "pinkie-promise": "^2.0.1",
     "ts-dev-stack": "^1.21.2",
     "tsds-config": "^0.2.0"
