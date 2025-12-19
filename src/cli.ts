@@ -37,7 +37,7 @@ function printHelp(name: string): void {
   console.log(`  ${name} --streaming "echo hello" "echo world"`);
 }
 
-export default (argv: string[], name: string): undefined => {
+export default (argv: string[], name: string): void => {
   const options = getopts(argv, {
     alias: { silent: 'si', concurrency: 'c', expanded: 'e', streaming: 's', version: 'v', help: 'h' },
     boolean: ['silent', 'expanded', 'streaming', 'version', 'help'],
@@ -65,7 +65,7 @@ export default (argv: string[], name: string): undefined => {
   }
 
   options.stdio = 'inherit'; // pass through stdio
-  run(args, options as DisDatOptions, (err?: DisDatError, results?: DisDatResult[]): undefined => {
+  run(args, options as DisDatOptions, (err?: DisDatError, results?: DisDatResult[]): void => {
     if (err && !err.results) {
       console.log(err.message);
       exit(ERROR_CODE);

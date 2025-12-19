@@ -20,4 +20,4 @@ export interface DisDatOptions extends SpawnOptions {
   silent?: boolean;
 }
 
-export type DisDatCallback = (err?: DisDatError, results?: DisDatResult[]) => undefined;
+export type DisDatCallback = (err?: DisDatError, results?: DisDatResult[]) => void;

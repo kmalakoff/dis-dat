@@ -8,7 +8,7 @@ const bracketsRegEx = /\{([\s\S]*)\}/;
 
 import type { DisDatCallback, DisDatError, DisDatOptions } from './types.ts';
 
-export default function worker(commands: string[], options: DisDatOptions, callback: DisDatCallback): undefined {
+export default function worker(commands: string[], options: DisDatOptions, callback: DisDatCallback): void {
   const spawnOptions = { cwd: process.cwd(), ...options } as SpawnOptions;
   let results = [];
   const queue = new Queue(options.concurrency || Infinity);
@@ -25,7 +25,7 @@ export default function worker(commands: string[], options: DisDatOptions, callb
       const args = argv.slice(1);
       const prefix = formatArguments(argv).join(' ');
 
-      function next(err?, res?): undefined {
+      function next(err?, res?): void {
         if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
           res = err;
           err = null;
