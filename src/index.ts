@@ -10,15 +10,12 @@ export default function disDat(commands: string[], callback: DisDatCallback): vo
 export default function disDat(commands: string[], options: DisDatOptions, callback: DisDatCallback): void;
 
 export default function disDat(commands: string[], options?: DisDatOptions | DisDatCallback, callback?: DisDatCallback): void | Promise<DisDatResult[]> {
-  if (typeof options === 'function') {
-    callback = options;
-    options = {};
-  }
-  options = options || {};
+  callback = typeof options === 'function' ? options : callback;
+  options = typeof options === 'function' ? {} : ((options || {}) as DisDatOptions);
 
   if (typeof callback === 'function') return worker(commands, options, callback);
   return new Promise((resolve, reject) =>
-    worker(commands, options as DisDatOptions, (err?: DisDatError, results?: DisDatResult[]): void => {
+    worker(commands, options, (err?: DisDatError, results?: DisDatResult[]): void => {
       err ? reject(err) : resolve(results);
     })
   );
