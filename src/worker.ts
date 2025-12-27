@@ -45,7 +45,7 @@ export default function worker(commands: string[], options: DisDatOptions, callb
         cb();
       }
 
-      if (!session && !options.silent) console.log(`$ ${formatArguments([command].concat(args)).join(' ')}`);
+      if (!session && !options.silent) console.log(`${index > 0 ? '\n' : ''}$ ${formatArguments([command].concat(args)).join(' ')}`);
 
       // Show command when running single command (no terminal session, unless silent)
       if (commands.length < 2) spawn(command, args, spawnOptions, next);
