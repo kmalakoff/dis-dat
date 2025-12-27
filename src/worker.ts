@@ -15,7 +15,7 @@ export default function worker(commands: string[], options: DisDatOptions, callb
 
   // Create session once for all processes (only if multiple commands)
   const interactive = !!options.interactive;
-  const session = commands.length >= 2 && createSession && !options.streaming ? createSession({ header: commands.join(' | '), interactive }) : null;
+  const session = commands.length >= 2 && process.stdout.isTTY && createSession && !options.streaming ? createSession({ header: commands.join(' | '), interactive }) : null;
 
   commands.forEach((_, index) => {
     queue.defer((cb) => {
@@ -45,12 +45,12 @@ export default function worker(commands: string[], options: DisDatOptions, callb
         cb();
       }
 
-      if (commands.length < 2) {
-        // Show command when running single command (no terminal session, unless silent)
-        if (!options.silent) console.log(`$ ${formatArguments([command].concat(args)).join(' ')}`);
-        spawn(command, args, spawnOptions, next);
-      } else if (session) session.spawn(command, args, spawnOptions, { expanded: options.expanded }, next);
-      else spawnStreaming(command, args, spawnOptions, { prefix }, next);
+      if (!session && !options.silent) console.log(`$ ${formatArguments([command].concat(args)).join(' ')}`);
+
+      // Show command when running single command (no terminal session, unless silent)
+      if (commands.length < 2) spawn(command, args, spawnOptions, next);
+      else if (session) session.spawn(command, args, spawnOptions, { group: prefix, expanded: options.expanded }, next);
+      else spawnStreaming(command, args, spawnOptions, { prefix: process.stdout.isTTY ? prefix : undefined }, next);
     });
   });
 

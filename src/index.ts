@@ -14,9 +14,5 @@ export default function disDat(commands: string[], options?: DisDatOptions | Dis
   options = typeof options === 'function' ? {} : ((options || {}) as DisDatOptions);
 
   if (typeof callback === 'function') return worker(commands, options, callback);
-  return new Promise((resolve, reject) =>
-    worker(commands, options, (err?: DisDatError, results?: DisDatResult[]): void => {
-      err ? reject(err) : resolve(results);
-    })
-  );
+  return new Promise((resolve, reject) => worker(commands, options, (err?: DisDatError, results?: DisDatResult[]): void => (err ? reject(err) : resolve(results))));
 }
