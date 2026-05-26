@@ -1,4 +1,4 @@
-import spawn, { type SpawnOptions } from 'cross-spawn-cb';
+import spawn, { type SpawnOptions, type SpawnResult } from 'cross-spawn-cb';
 import Queue from 'queue-cb';
 import spawnStreaming from 'spawn-streaming';
 import { createSession, formatArguments } from 'spawn-term';
@@ -6,16 +6,16 @@ import { parseArgsStringToArgv } from 'string-argv';
 
 const bracketsRegEx = /\{([\s\S]*)\}/;
 
-import type { DisDatCallback, DisDatError, DisDatOptions } from './types.ts';
+import type { DisDatCallback, DisDatError, DisDatOptions, DisDatResult } from './types.ts';
 
 export default function worker(commands: string[], options: DisDatOptions, callback: DisDatCallback): void {
   const spawnOptions = { cwd: process.cwd(), ...options } as SpawnOptions;
-  let results = [];
+  let results: DisDatResult[] = [];
   const queue = new Queue(options.concurrency || Infinity);
 
   // Create session once for all processes (only if multiple commands)
   const interactive = !!options.interactive;
-  const session = commands.length >= 2 && process.stdout.isTTY && createSession && !options.streaming ? createSession({ header: commands.join(' | '), interactive }) : null;
+  const session = commands.length >= 2 && process.stdout.isTTY && typeof createSession === 'function' && !options.streaming ? createSession({ header: commands.join(' | '), interactive }) : null;
 
   commands.forEach((_, index) => {
     queue.defer((cb) => {
@@ -25,19 +25,19 @@ export default function worker(commands: string[], options: DisDatOptions, callb
       const args = argv.slice(1);
       const prefix = formatArguments(argv).join(' ');
 
-      function next(err?, res?): void {
+      function next(err?: Error | null, res?: SpawnResult): void {
         if (err && err.message.indexOf('ExperimentalWarning') >= 0) {
-          res = err;
+          res = err as unknown as SpawnResult;
           err = null;
         }
 
         // suppress error
         if (err && match) {
-          res = err;
+          res = err as unknown as SpawnResult;
           err = null;
         }
 
-        results.push({ index, command, args, error: err, result: res });
+        results.push({ index, command, args, error: err ?? undefined, result: res });
         if (err && options.concurrency === 1) {
           cb(err); // break early
           return;
@@ -55,14 +55,14 @@ export default function worker(commands: string[], options: DisDatOptions, callb
   });
 
   queue.await((err) => {
-    results = results.sort((a, b) => a.index - b.index);
+    results = results.sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
     if (err) (err as DisDatError).results = results;
     if (session) {
       session.waitAndClose(() => {
-        err ? callback(err) : callback(null, results);
+        err ? callback(err) : callback(undefined, results);
       });
     } else {
-      err ? callback(err) : callback(null, results);
+      err ? callback(err) : callback(undefined, results);
     }
   });
 }

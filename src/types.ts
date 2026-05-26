@@ -1,9 +1,10 @@
 import type { SpawnOptions, SpawnResult } from 'cross-spawn-cb';
 
 export interface DisDatResult {
+  index?: number;
   command: string;
   args: string[];
-  version: string;
+  version?: string;
   result?: SpawnResult;
   error?: Error;
 }
