@@ -42,8 +42,7 @@
     "dtd": "bin/dtd.js"
   },
   "files": [
-    "dist",
-    "bin"
+    "dist"
   ],
   "scripts": {
     "build": "tsds build",
@@ -59,7 +58,7 @@
     "getopts-compat": "^2.2.6",
     "queue-cb": "^1.6.3",
     "spawn-streaming": "^1.1.16",
-    "spawn-term": "^3.3.6",
+    "spawn-term": "^3.5.9",
     "string-argv": "^0.2.1"
   },
   "devDependencies": {
