@@ -1,11 +1,11 @@
 import exit from 'exit-compat';
 import { readFileSync } from 'fs';
 import getopts from 'getopts-compat';
+import Module from 'module';
 import path from 'path';
-import { createSession, figures, formatArguments } from 'spawn-term';
 import url from 'url';
-import run from './index.ts';
 
+const _require = typeof require === 'undefined' ? Module.createRequire(import.meta.url) : require;
 const ERROR_CODE = 3;
 const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
 
@@ -65,16 +65,19 @@ export default (argv: string[], name: string): void => {
   }
 
   options.stdio = 'inherit'; // pass through stdio
-  run(args, options as DisDatOptions, (err?: DisDatError, results?: DisDatResult[]): void => {
-    if (err && !err.results) {
-      console.log(err.message);
+  const report = (err?: DisDatError | Error | null, results?: DisDatResult[]): void => {
+    const ddErr = err as DisDatError | undefined;
+    if (ddErr && !ddErr.results) {
+      console.log(ddErr.message);
       exit(ERROR_CODE);
       return;
     }
-    const allResults = (err ? err.results : results) ?? [];
+    const allResults = (ddErr ? ddErr.results : results) ?? [];
     const errors = allResults.filter((result) => !!result.error);
 
     if (!options.silent) {
+      // deferred: spawn-term's session/formatting helpers are only needed to report run results
+      const { createSession, figures, formatArguments } = _require('spawn-term');
       if (!createSession) {
         console.log('\n======================');
         allResults.forEach((res) => {
@@ -87,5 +90,25 @@ export default (argv: string[], name: string): void => {
       }
     }
     exit(err || errors.length ? ERROR_CODE : 0);
-  });
+  };
+  // deferred: index.ts pulls the whole spawn pipeline. require() cannot load this ESM sibling below
+  // Node 20.19 (require(esm)), so the ESM half needs a real dynamic import; the CJS half's sibling
+  // is genuine CommonJS, so a plain synchronous require avoids depending on Promise, which isn't
+  // global before Node 0.12.
+  loadIndex((err, run) => (err || !run ? report(err) : run(args, options as DisDatOptions, report)));
 };
+
+type RunFn = (commands: string[], options: DisDatOptions, callback: (err?: DisDatError | Error | null, results?: DisDatResult[]) => void) => void;
+
+function loadIndex(callback: (err: Error | null, run?: RunFn) => void): void {
+  if (typeof require === 'undefined') {
+    import('./index.js').then((mod) => callback(null, mod.default || mod)).catch((err) => callback(err instanceof Error ? err : new Error(String(err))));
+  } else {
+    try {
+      const mod = require('./index.js');
+      callback(null, mod.default || mod);
+    } catch (err) {
+      callback(err instanceof Error ? err : new Error(String(err)));
+    }
+  }
+}
