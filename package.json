@@ -59,7 +59,7 @@
     "queue-cb": "^1.6.3",
     "spawn-streaming": "^1.1.16",
     "spawn-term": "^3.5.9",
-    "string-argv": "^0.2.1"
+    "string-argv": "0.2.1"
   },
   "devDependencies": {
     "@types/mocha": "*",
