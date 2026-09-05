@@ -2,7 +2,7 @@ import spawn, { type SpawnOptions, type SpawnResult } from 'cross-spawn-cb';
 import Queue from 'queue-cb';
 import spawnStreaming from 'spawn-streaming';
 import { createSession, formatArguments } from 'spawn-term';
-import { parseArgsStringToArgv } from 'string-argv';
+import parseArgsStringToArgv from 'string-argv';
 
 const bracketsRegEx = /\{([\s\S]*)\}/;
 

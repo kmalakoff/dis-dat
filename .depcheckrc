@@ -1,1 +1,1 @@
-ignores: ["node-version-use", "ts-dev-stack", "dis-dat"]
+ignores: ["dis-dat", "node-version-use", "ts-dev-stack"]
