@@ -64,7 +64,6 @@
   "devDependencies": {
     "@types/mocha": "*",
     "@types/node": "*",
-    "@types/string-argv": "^0.3.0",
     "cr": "^0.1.0",
     "is-version": "^1.0.9",
     "node-version-use": "*",
@@ -74,11 +73,5 @@
   },
   "engines": {
     "node": ">=0.8"
-  },
-  "allowScripts": {
-    "node-semvers": true,
-    "node-version-use": true,
-    "node-filename-to-dist-paths": true,
-    "thread-sleep-compat": true
   }
 }
